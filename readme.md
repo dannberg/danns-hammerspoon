@@ -1,6 +1,8 @@
-# Hammerspoon Script
+# Dann's Awesome Hammerspoon
 
 This Hammerspoon script includes custom keybindings to quickly open applications, resize windows, and open URLs.
+
+It needs to be cleaned up a bit, and more needs to be added. But it's 1) functional and 2) a start!
 
 ## Keybindings
 
