@@ -28,7 +28,7 @@ singleapps = {
   {'f', 'Finder'},
   {'b', 'Brave Browser'},
   {'s', 'Sublime Text'},
-  {'o', 'Obsidian'},
+  {'n', 'Obsidian'},
   {'t', 'iTerm'}
 }
 

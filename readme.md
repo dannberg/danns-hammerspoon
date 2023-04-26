@@ -15,7 +15,7 @@ Press Hyper + the corresponding key to open or switch to the specified applicati
 - Hyper + F: Finder
 - Hyper + B: Brave Browser
 - Hyper + S: Sublime Text
-- Hyper + O: Obsidian
+- Hyper + N: Obsidian
 - Hyper + T: iTerm
 
 ### URL Keybindings
