@@ -105,6 +105,22 @@ function resizeRightThirdAndRestore()
     end
 end
 
+-- Function to make the current window full screen
+function makeWindowFullScreen()
+    local win = hs.window.focusedWindow()
+
+    if not win then
+        print("No focused window")
+        return
+    end
+
+    win:maximize(0) -- Animate instantly by setting the duration to 0
+end
+
+-- Bind hyperkey-[up arrow] to make the current window full screen
+hs.hotkey.bind(hyper, "up", makeWindowFullScreen)
+
+
 -- Bind hyperkey-[right arrow] to resize the current window to the right 1/3 and restore it
 hs.hotkey.bind(hyper, "right", resizeRightThirdAndRestore)
 
