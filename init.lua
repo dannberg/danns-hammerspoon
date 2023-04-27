@@ -117,6 +117,31 @@ function makeWindowFullScreen()
     win:maximize(0) -- Animate instantly by setting the duration to 0
 end
 
+-- Process CBZ file
+-- function processSelectedCbzFile()
+--     local finder = hs.appfinder.appFromName("Finder")
+--     local selectedItem = finder:selection()[1]
+
+--     if selectedItem then
+--         local filePath = selectedItem:raw():gsub("file://", ""):gsub("%%20", " ")
+--         local ext = string.lower(string.match(filePath, "%.([^%.]+)$"))
+
+--         if ext == "cbz" then
+--             local scriptPath = "~/cbz_process.sh"  -- Update this path to the location of the script
+--             local command = string.format("%s %q", scriptPath, filePath)
+--             hs.execute(command)
+--             hs.alert("Processed " .. filePath)
+--         else
+--             hs.alert("Selected file is not a .cbz file")
+--         end
+--     else
+--         hs.alert("No file selected in Finder")
+--     end
+-- end
+
+-- hs.hotkey.bind(hyper, "x", processSelectedCbzFile)
+
+
 -- Bind hyperkey-[up arrow] to make the current window full screen
 hs.hotkey.bind(hyper, "up", makeWindowFullScreen)
 
