@@ -25,6 +25,12 @@ Press Hyper + the corresponding key to open the specified URL:
 - Hyper + N: https://QuickConnect.to/dannberg
 - Hyper + D: https://dannb.org
 
+### Script Keybindings
+
+Press Hyper + the corresponding key to run a script:
+
+- Hpyer + X: Takes the selected file in Finder and renames any single-digit numbers to be two-digit numbers
+
 ### Window Resizing Keybindings
 
 Press Hyper + the corresponding arrow key to resize the current window:

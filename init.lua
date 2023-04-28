@@ -117,30 +117,47 @@ function makeWindowFullScreen()
     win:maximize(0) -- Animate instantly by setting the duration to 0
 end
 
--- Process CBZ file
--- function processSelectedCbzFile()
---     local finder = hs.appfinder.appFromName("Finder")
---     local selectedItem = finder:selection()[1]
+-- Accepts a zip or cbz, and runs a script that renames the first 10 filenames to two-digit numbers
+function processSelectedCompressedFile()
+    local finder = hs.appfinder.appFromName("Finder")
+    local finderActive = hs.application.frontmostApplication() == finder
 
---     if selectedItem then
---         local filePath = selectedItem:raw():gsub("file://", ""):gsub("%%20", " ")
---         local ext = string.lower(string.match(filePath, "%.([^%.]+)$"))
+    if not finderActive then
+        hs.alert.show("Please select a file in Finder.")
+        return
+    end
 
---         if ext == "cbz" then
---             local scriptPath = "~/cbz_process.sh"  -- Update this path to the location of the script
---             local command = string.format("%s %q", scriptPath, filePath)
---             hs.execute(command)
---             hs.alert("Processed " .. filePath)
---         else
---             hs.alert("Selected file is not a .cbz file")
---         end
---     else
---         hs.alert("No file selected in Finder")
---     end
--- end
+    -- Get selected items from Finder using AppleScript
+    local script = [[
+        tell application "Finder"
+            set selectedItems to selection
+            set itemList to {}
+            repeat with i in selectedItems
+                set end of itemList to (POSIX path of (i as alias))
+            end repeat
+            return itemList
+        end tell
+    ]]
+    local _, selectedItems, _ = hs.osascript.applescript(script)
 
--- hs.hotkey.bind(hyper, "x", processSelectedCbzFile)
+    if #selectedItems == 0 then
+        hs.alert.show("Please select a compressed folder.")
+        return
+    end
 
+    local selectedFile = selectedItems[1]
+    local fileExtension = string.match(selectedFile, "%.([^%.]+)$")
+
+    if fileExtension ~= "zip" and fileExtension ~= "cbz" then
+        hs.alert.show("Please select a compressed folder.")
+        return
+    end
+
+    hs.execute(string.format("/Users/dannberg/Code/scripts/cbz_process.sh '%s'", selectedFile))
+end
+
+-- Bind hyperkey-x to rename files inside the selected compressed file in finder
+hs.hotkey.bind(hyper, "X", processSelectedCompressedFile)
 
 -- Bind hyperkey-[up arrow] to make the current window full screen
 hs.hotkey.bind(hyper, "up", makeWindowFullScreen)
