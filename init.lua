@@ -37,6 +37,64 @@ for _, app in ipairs(singleapps) do
     bindKeyToApp(app[1], app[2])
 end
 
+-- Display overlay
+function hideTextOverlayIfMouseOutside()
+    if textOverlay then
+        local mousePos = hs.mouse.getAbsolutePosition()
+        local overlayFrame = textOverlay:frame()
+
+        if not (mousePos.x >= overlayFrame.x and mousePos.x <= (overlayFrame.x + overlayFrame.w) and
+                mousePos.y >= overlayFrame.y and mousePos.y <= (overlayFrame.y + overlayFrame.h)) then
+            textOverlay:delete()
+            textOverlay = nil
+        end
+    end
+end
+
+function showTextOverlay()
+    if textOverlay then
+        textOverlay:delete()
+        textOverlay = nil
+    else
+        local mainScreen = hs.screen.mainScreen()
+        local mainRes = mainScreen:fullFrame()
+        local text = [[
+Hyper + F: Finder
+Hyper + B: Brave Browser
+Hyper + S: Sublime Text
+Hyper + Z: Obsidian
+Hyper + T: iTerm
+Hyper + N: NAS
+Hyper + D: dannb.org
+]]
+
+        textOverlay = hs.canvas.new({x = mainRes.w / 2 - 200, y = mainRes.h / 2 - 200, w = 400, h = 400})
+        textOverlay[1] = {
+            type = "rectangle",
+            action = "fill",
+            fillColor = { white = 0, alpha = 0.75 },
+            roundedRectRadii = { xRadius = 10, yRadius = 10 },
+        }
+        textOverlay[2] = {
+            type = "text",
+            text = text,
+            textColor = { white = 1, alpha = 1 },
+            textSize = 16,
+            textAlignment = "center",
+            frame = { x = "5%", y = "10%", w = "90%", h = "80%" },
+        }
+        textOverlay:show()
+
+        hs.timer.doAfter(3, function()
+            hideTextOverlayIfMouseOutside()
+        end)
+    end
+end
+
+
+hs.hotkey.bind(hyper, "a", showTextOverlay)
+
+
 -- Function to resize the current window left
 function resizeCurrentWindow()
     local win = hs.window.focusedWindow()
